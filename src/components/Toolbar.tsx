@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { SETTING_LIMITS } from "../state/defaults";
 import { usePrompter } from "../state/PrompterContext";
-import ColorControl from "./ColorControl";
+import AppearanceControl from "./AppearanceControl";
 import ImportButton from "./ImportButton";
 import RangeControl from "./RangeControl";
 import ToolbarButton from "./ToolbarButton";
@@ -10,6 +10,7 @@ import {
   FlipXIcon,
   FlipYIcon,
   GripIcon,
+  InvertScrollIcon,
   PauseIcon,
   PencilIcon,
   PlayIcon,
@@ -86,10 +87,10 @@ export default function Toolbar({ onRewind }: Props) {
         borderTopWidth: docked === "bottom" ? 1 : 0,
       }}
     >
-      <div className="px-2 py-1.5 sm:px-3">
+      <div className="px-2 py-2.5 sm:px-3">
         {/* Wraps to a second line on tablet widths rather than scrolling controls
             off the right edge, and stays centred either way. */}
-        <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 xl:gap-x-3">
+        <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 xl:gap-x-3">
           {/* Groups wrap as units, so a narrow tablet breaks the bar at a seam
               instead of stranding one slider on its own line. */}
           <div className="flex items-center gap-1 sm:gap-2">
@@ -101,16 +102,17 @@ export default function Toolbar({ onRewind }: Props) {
               onPointerMove={moveDrag}
               onPointerUp={endDrag}
               onPointerCancel={endDrag}
-              className="flex h-11 w-9 shrink-0 cursor-grab touch-none items-center justify-center text-neutral-500 active:cursor-grabbing"
+              className="flex h-14 w-11 shrink-0 cursor-grab touch-none items-center justify-center text-neutral-500 active:cursor-grabbing"
             >
               <GripIcon />
             </button>
 
             <ToolbarButton
+              big
               label={playing ? "Pause" : "Play"}
               onClick={() => dispatch({ type: "TOGGLE_PLAY" })}
             >
-              {playing ? <PauseIcon /> : <PlayIcon />}
+              {playing ? <PauseIcon className="h-9 w-9" /> : <PlayIcon className="h-9 w-9" />}
             </ToolbarButton>
 
             <ToolbarButton label="Back to start" onClick={onRewind}>
@@ -139,20 +141,27 @@ export default function Toolbar({ onRewind }: Props) {
             >
               <FlipYIcon />
             </ToolbarButton>
+
+            <ToolbarButton
+              label="Invert mouse scroll direction"
+              active={settings.reverseScroll}
+              onClick={() => dispatch({ type: "TOGGLE_REVERSE_SCROLL" })}
+            >
+              <InvertScrollIcon />
+            </ToolbarButton>
           </div>
 
           <div className="flex items-center gap-1 sm:gap-2">
-            <ColorControl
-              label="Background color"
-              value={settings.bgColor}
+            <AppearanceControl
+              bgColor={settings.bgColor}
+              textColor={settings.textColor}
+              fontFamily={settings.fontFamily}
+              lineHeight={settings.lineHeight}
               openDown={docked === "top"}
-              onChange={(v) => set("bgColor", v)}
-            />
-            <ColorControl
-              label="Text color"
-              value={settings.textColor}
-              openDown={docked === "top"}
-              onChange={(v) => set("textColor", v)}
+              onBgColor={(v) => set("bgColor", v)}
+              onTextColor={(v) => set("textColor", v)}
+              onFontFamily={(v) => set("fontFamily", v)}
+              onLineHeight={(v) => set("lineHeight", v)}
             />
           </div>
 

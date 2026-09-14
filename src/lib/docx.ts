@@ -25,23 +25,54 @@ export function sanitize(html: string): string {
 const escapeHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
-/** Plain text -> paragraphs. Blank lines split, single newlines become <br>. */
+/** Base paragraph gap, in em - one blank line between paragraphs. */
+const PARA_GAP_EM = 0.6
+const MAX_EXTRA_BLANK_LINES = 3
+
+/**
+ * Plain text -> paragraphs. A blank line splits paragraphs; single newlines
+ * become <br>. Extra consecutive blank lines widen the gap proportionally
+ * (capped) rather than being collapsed, so an operator can write a longer
+ * pause into the script the same way they'd write it on paper.
+ */
 export function textToHtml(text: string): string {
-  return text
-    .split(/\n\s*\n/)
-    .map((block) => block.trim())
-    .filter(Boolean)
-    .map((block) => `<p>${escapeHtml(block).replace(/\n/g, '<br>')}</p>`)
+  const chunks = text.split(/(\n{2,})/)
+  const blocks: { text: string; extraBlankLines: number }[] = []
+
+  for (let i = 0; i < chunks.length; i += 2) {
+    const block = chunks[i].trim()
+    if (!block) continue
+    const separator = chunks[i + 1] ?? ''
+    const extraBlankLines = Math.min(Math.max(separator.length - 2, 0), MAX_EXTRA_BLANK_LINES)
+    blocks.push({ text: block, extraBlankLines })
+  }
+
+  return blocks
+    .map(({ text: block, extraBlankLines }, i) => {
+      const isLast = i === blocks.length - 1
+      const gapStyle =
+        !isLast && extraBlankLines > 0
+          ? ` style="margin-bottom:${(1 + extraBlankLines) * PARA_GAP_EM}em"`
+          : ''
+      return `<p${gapStyle}>${escapeHtml(block).replace(/\n/g, '<br>')}</p>`
+    })
     .join('')
 }
 
 /** Sanitized HTML -> plain text, for round-tripping into the editor. */
 export function htmlToText(html: string): string {
   const doc = new DOMParser().parseFromString(html, 'text/html')
-  return Array.from(doc.body.children)
-    .map((el) => (el.textContent ?? '').trim())
-    .filter(Boolean)
-    .join('\n\n')
+  const elements = Array.from(doc.body.children).filter((el) => (el.textContent ?? '').trim())
+
+  return elements
+    .map((el, i) => {
+      const text = (el.textContent ?? '').trim()
+      if (i === elements.length - 1) return text
+      const gapEm = parseFloat((el as HTMLElement).style.marginBottom || '') || PARA_GAP_EM
+      const extraBlankLines = Math.max(Math.round(gapEm / PARA_GAP_EM) - 1, 0)
+      return text + '\n'.repeat(2 + extraBlankLines)
+    })
+    .join('')
 }
 
 class DocxError extends Error {}

@@ -51,17 +51,16 @@ export default function ImportButton({ onImported, onError }: Props) {
     <>
       <button
         type="button"
-        aria-label="Import .docx"
-        title="Import .docx"
+        aria-label={busy ? 'Importing…' : 'Import .docx'}
+        title={busy ? 'Importing…' : 'Import .docx'}
         disabled={busy !== null}
         onClick={() => setOpen(true)}
-        className="flex h-11 shrink-0 items-center gap-2 rounded-lg border border-neutral-600 px-3 text-sm text-neutral-200 active:bg-neutral-700 disabled:opacity-50"
+        className="flex h-14 min-w-14 shrink-0 items-center justify-center rounded-lg border border-neutral-600 px-2 text-neutral-200 active:bg-neutral-700 disabled:opacity-50"
       >
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.8">
           <path d="M12 16V4m0 0L8 8m4-4 4 4" strokeLinecap="round" strokeLinejoin="round" />
           <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" strokeLinecap="round" />
         </svg>
-        {busy ? 'Reading…' : 'Import'}
       </button>
 
       {open && (

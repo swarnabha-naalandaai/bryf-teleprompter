@@ -19,7 +19,10 @@ export interface ScrollEngine {
   beginScrub(): void
   /** Release the hold. A fling velocity (px/sec, offset space) coasts first. */
   endScrub(velocity?: number): void
-  /** Wheel / trackpad scrolling: nudge now, resume once the wheel goes quiet. */
+  /**
+   * Wheel / trackpad scrolling: nudge now, resume once the wheel goes quiet.
+   * Direction flips when `settings.reverseScroll` is on.
+   */
   wheel(delta: number): void
   remeasure(): void
 }
@@ -242,7 +245,8 @@ export function useScrollEngine({
         animRef.current = null
         momentumRef.current = 0
         scrubRef.current = true
-        offsetRef.current = clamp(offsetRef.current + delta)
+        const d = settingsRef.current.reverseScroll ? -delta : delta
+        offsetRef.current = clamp(offsetRef.current + d)
         apply()
         if (wheelTimerRef.current !== undefined) clearTimeout(wheelTimerRef.current)
         wheelTimerRef.current = window.setTimeout(() => {

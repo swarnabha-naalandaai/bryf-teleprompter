@@ -22,7 +22,17 @@ export default function PrompterView({
   settings,
   script,
 }: Props) {
-  const { flipX, flipY, margin, fontSize, textColor, bgColor, align, lineHeight } = settings
+  const {
+    flipX,
+    flipY,
+    margin,
+    fontSize,
+    textColor,
+    bgColor,
+    align,
+    lineHeight,
+    fontFamily,
+  } = settings
 
   return (
     <div
@@ -39,6 +49,7 @@ export default function PrompterView({
               paddingBlock: '50dvh',
               paddingInline: `${margin}%`,
               fontSize: `${fontSize}px`,
+              fontFamily,
               lineHeight,
               color: textColor,
               textAlign: align,
