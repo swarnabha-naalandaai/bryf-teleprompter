@@ -8,6 +8,8 @@ export default function ScriptEditor() {
 
   const close = () => dispatch({ type: 'SET_EDITOR_OPEN', open: false })
 
+  const clear = () => setText('')
+
   const save = () => {
     const html = textToHtml(text)
     dispatch({
@@ -28,6 +30,14 @@ export default function ScriptEditor() {
           {state.script.name || 'Untitled'}
         </h1>
         <div className="flex shrink-0 gap-2">
+          <button
+            type="button"
+            onClick={clear}
+            disabled={!text}
+            className="h-11 rounded-lg border border-neutral-600 px-4 text-sm text-neutral-200 active:bg-neutral-800 disabled:opacity-40"
+          >
+            Clear
+          </button>
           <button
             type="button"
             onClick={close}
