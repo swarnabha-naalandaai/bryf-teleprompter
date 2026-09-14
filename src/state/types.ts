@@ -13,8 +13,6 @@ export interface Settings {
   flipX: boolean
   /** mirror top <-> bottom */
   flipY: boolean
-  /** invert mouse-wheel / trackpad scroll direction; does not affect autoplay */
-  reverseScroll: boolean
   bgColor: string
   textColor: string
   lineHeight: number
@@ -42,7 +40,6 @@ export type Action =
   | { type: 'CYCLE_ALIGN' }
   | { type: 'TOGGLE_FLIP_X' }
   | { type: 'TOGGLE_FLIP_Y' }
-  | { type: 'TOGGLE_REVERSE_SCROLL' }
   | { type: 'SET_SCRIPT'; html: string; name: string }
   | { type: 'SET_PLAYING'; playing: boolean }
   | { type: 'TOGGLE_PLAY' }

@@ -10,7 +10,6 @@ import {
   FlipXIcon,
   FlipYIcon,
   GripIcon,
-  InvertScrollIcon,
   PauseIcon,
   PencilIcon,
   PlayIcon,
@@ -140,14 +139,6 @@ export default function Toolbar({ onRewind }: Props) {
               onClick={() => dispatch({ type: "TOGGLE_FLIP_Y" })}
             >
               <FlipYIcon />
-            </ToolbarButton>
-
-            <ToolbarButton
-              label="Invert mouse scroll direction"
-              active={settings.reverseScroll}
-              onClick={() => dispatch({ type: "TOGGLE_REVERSE_SCROLL" })}
-            >
-              <InvertScrollIcon />
             </ToolbarButton>
           </div>
 

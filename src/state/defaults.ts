@@ -33,7 +33,6 @@ export const DEFAULT_SETTINGS: Settings = {
   align: 'center',
   flipX: false,
   flipY: false,
-  reverseScroll: false,
   bgColor: '#000000',
   textColor: '#ffffff',
   lineHeight: 1.5,

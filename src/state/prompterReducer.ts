@@ -18,12 +18,6 @@ export function prompterReducer(state: PrompterState, action: Action): PrompterS
     case 'TOGGLE_FLIP_Y':
       return { ...state, settings: { ...state.settings, flipY: !state.settings.flipY } }
 
-    case 'TOGGLE_REVERSE_SCROLL':
-      return {
-        ...state,
-        settings: { ...state.settings, reverseScroll: !state.settings.reverseScroll },
-      }
-
     case 'SET_SCRIPT':
       return {
         ...state,

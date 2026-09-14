@@ -85,15 +85,6 @@ export function PaletteIcon() {
   )
 }
 
-export function InvertScrollIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-7 w-7" {...stroke}>
-      <path d="M7 4v13M7 17l-3-3M7 17l3-3" />
-      <path d="M17 20V7M17 7l-3 3M17 7l3 3" />
-    </svg>
-  )
-}
-
 export function GripIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
