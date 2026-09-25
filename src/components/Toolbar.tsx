@@ -9,6 +9,7 @@ import {
   AlignIcon,
   FlipXIcon,
   FlipYIcon,
+  FullscreenIcon,
   GripIcon,
   PauseIcon,
   PencilIcon,
@@ -17,10 +18,18 @@ import {
 } from "./icons";
 
 interface Props {
+  fullscreenActive: boolean;
+  fullscreenSupported: boolean;
+  onFullscreenToggle: () => void;
   onRewind: () => void;
 }
 
-export default function Toolbar({ onRewind }: Props) {
+export default function Toolbar({
+  fullscreenActive,
+  fullscreenSupported,
+  onFullscreenToggle,
+  onRewind,
+}: Props) {
   const { state, dispatch } = usePrompter();
   const { settings, playing } = state;
   const barRef = useRef<HTMLDivElement | null>(null);
@@ -117,6 +126,16 @@ export default function Toolbar({ onRewind }: Props) {
             <ToolbarButton label="Back to start" onClick={onRewind}>
               <RewindIcon />
             </ToolbarButton>
+
+            {fullscreenSupported && (
+              <ToolbarButton
+                label={fullscreenActive ? "Exit full screen" : "Enter full screen"}
+                active={fullscreenActive}
+                onClick={onFullscreenToggle}
+              >
+                <FullscreenIcon active={fullscreenActive} />
+              </ToolbarButton>
+            )}
 
             <ToolbarButton
               label={`Align: ${settings.align}`}

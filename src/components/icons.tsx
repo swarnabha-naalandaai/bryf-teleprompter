@@ -66,6 +66,18 @@ export function FlipYIcon() {
   )
 }
 
+export function FullscreenIcon({ active }: { active: boolean }) {
+  const paths = active
+    ? ['M9 4v5H4', 'M15 4v5h5', 'M9 20v-5H4', 'M15 20v-5h5']
+    : ['M4 9V4h5', 'M20 9V4h-5', 'M4 15v5h5', 'M20 15v5h-5']
+
+  return (
+    <svg viewBox="0 0 24 24" className="h-7 w-7" {...stroke}>
+      {paths.map((d) => <path key={d} d={d} />)}
+    </svg>
+  )
+}
+
 export function PencilIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-6 w-6" {...stroke}>

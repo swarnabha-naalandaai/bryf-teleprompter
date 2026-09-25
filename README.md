@@ -18,6 +18,7 @@ npm run build      # static bundle in dist/
 | grip | drag the whole bar between the top and bottom edge (remembered) |
 | play / pause | start and stop the scroll |
 | rewind | back to the first line |
+| full screen | hides Safari's browser controls on supported iPads; tap again to exit |
 | align | cycles left → center → right |
 | mirror ⇄ | flips left/right for beamsplitter rigs |
 | mirror ⇅ | flips top/bottom; scroll direction follows so text still reads forward |

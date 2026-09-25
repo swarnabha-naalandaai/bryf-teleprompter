@@ -5,6 +5,7 @@ import Toolbar from './components/Toolbar'
 import { useGestures, type DragStart } from './engine/useGestures'
 import { EYE_LINE, useScrollEngine } from './engine/useScrollEngine'
 import { useWakeLock } from './engine/useWakeLock'
+import { useFullscreen } from './engine/useFullscreen'
 import { measureParagraphs, visualTops } from './lib/paragraphs'
 import { PrompterProvider, usePrompter } from './state/PrompterContext'
 
@@ -31,6 +32,13 @@ function Prompter() {
   })
 
   useWakeLock(playing)
+  const { active: fullscreenActive, supported: fullscreenSupported, toggle: toggleFullscreen } = useFullscreen()
+
+  const onFullscreenToggle = useCallback(async () => {
+    if (!(await toggleFullscreen())) {
+      dispatch({ type: 'TOAST', message: 'Full screen is unavailable in this browser.' })
+    }
+  }, [dispatch, toggleFullscreen])
 
   // A new script starts from the first line.
   useEffect(() => {
@@ -106,6 +114,9 @@ function Prompter() {
       />
 
       <Toolbar
+        fullscreenActive={fullscreenActive}
+        fullscreenSupported={fullscreenSupported}
+        onFullscreenToggle={onFullscreenToggle}
         onRewind={() => {
           dispatch({ type: 'SET_PLAYING', playing: false })
           engine.rewind()
