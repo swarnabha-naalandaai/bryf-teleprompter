@@ -124,9 +124,10 @@ export function useScrollEngine({
         apply()
       } else if (playingRef.current && !scrubRef.current) {
         const { speed, fontSize, flipY } = settingsRef.current
-        // Tie speed to font size so "50" reads at the same pace at any size.
-        // 3.6 puts speed 50 @ 30px at ~108 px/s - a natural read-aloud pace.
-        const pxPerSec = (speed / 50) * fontSize * 3.6
+        // Tie speed to font size so a given number reads at the same pace at
+        // any size. The 1–50 control maps to the former 1–30 range: 20 matches
+        // old speed 12 and 50 matches the former maximum speed 30.
+        const pxPerSec = (speed / 50) * fontSize * 2.16
         const dir = flipY ? -1 : 1
         const next = offsetRef.current + dir * pxPerSec * dt
         const max = maxScrollRef.current

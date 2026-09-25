@@ -6,7 +6,7 @@ export interface Settings {
   fontSize: number
   /** % of viewport width, per side */
   margin: number
-  /** 1-100, mapped to px/sec in the scroll engine */
+  /** 1-50 whole-number precision steps, mapped to px/sec in the scroll engine */
   speed: number
   align: Align
   /** mirror left <-> right (beamsplitter rigs) */

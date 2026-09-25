@@ -29,7 +29,8 @@ export const FONT_OPTIONS = [
 export const DEFAULT_SETTINGS: Settings = {
   fontSize: 30,
   margin: 24,
-  speed: 50,
+  // This is equivalent to the old speed 12 on the expanded 1–50 scale.
+  speed: 20,
   align: 'center',
   flipX: false,
   flipY: false,
@@ -43,7 +44,8 @@ export const DEFAULT_SETTINGS: Settings = {
 export const SETTING_LIMITS = {
   fontSize: { min: 20, max: 140, step: 1 },
   margin: { min: 0, max: 40, step: 1 },
-  speed: { min: 1, max: 100, step: 1 },
+  // Each whole-number step equals half the previous speed increment.
+  speed: { min: 1, max: 50, step: 1 },
   lineHeight: { min: 1, max: 2.2, step: 0.1 },
 } as const
 

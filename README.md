@@ -25,7 +25,7 @@ npm run build      # static bundle in dist/
 | background / text color | 8 presets + native color picker |
 | text size | 20–140px |
 | margin | 0–40% of screen width per side |
-| speed | 1–100, scaled by text size so a given number reads at the same pace |
+| speed | 1–50 whole-number steps; 20 matches the previous speed 12 and 50 its former practical maximum of 30, scaled by text size |
 | Import | opens a source sheet: device file picker, or Google Drive |
 | pencil | type or paste a script directly |
 
